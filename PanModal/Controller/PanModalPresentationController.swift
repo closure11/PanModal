@@ -382,7 +382,7 @@ private extension PanModalPresentationController {
             presentedView.frame.origin.y = max(yPosition, anchoredYPosition)
         }
         panContainerView.frame.origin.x = frame.origin.x
-        presentedViewController.view.frame = CGRect(origin: .zero, size: adjustedSize)
+        presentedViewController.view?.frame = CGRect(origin: .zero, size: adjustedSize)
     }
 
     /**
@@ -391,7 +391,7 @@ private extension PanModalPresentationController {
      during initial view presentation in longForm (when view bounces)
      */
     func adjustPanContainerBackgroundColor() {
-        panContainerView.backgroundColor = presentedViewController.view.backgroundColor
+        panContainerView.backgroundColor = presentedViewController.view?.backgroundColor
             ?? presentable?.panScrollable?.backgroundColor
     }
 
@@ -459,7 +459,7 @@ private extension PanModalPresentationController {
          offsets it
          */
         if #available(iOS 11.0, *) {
-            scrollView.contentInset.bottom = presentingViewController.view.safeAreaInsets.bottom
+            scrollView.contentInset.bottom = presentingViewController.view?.safeAreaInsets.bottom ?? .zero
         } else {
             scrollView.contentInset.bottom = presentingViewController.bottomLayoutGuide.length
         }
@@ -753,7 +753,7 @@ private extension PanModalPresentationController {
                 haltScrolling(scrollView)
             }
 
-        } else if presentedViewController.view.isKind(of: UIScrollView.self)
+        } else if (presentedViewController.view?.isKind(of: UIScrollView.self) ?? false)
             && !isPresentedViewAnimating && scrollView.contentOffset.y <= 0 {
 
             /**
